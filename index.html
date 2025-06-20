@@ -2,67 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Steak Bot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SteakBot – The Ultimate Steak-Eating Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #e6f0fa, #f9fbfe);
-      color: #222222;
-      padding: 40px;
-      max-width: 800px;
+      margin: 0;
+      background-color: #fefefe;
+      color: #333;
+    }
+    header {
+      background-color: #1f1f1f;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      margin-left: 1rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    section {
+      padding: 2rem;
+      max-width: 900px;
       margin: auto;
-      line-height: 1.6;
-      min-height: 100vh;
-      box-sizing: border-box;
     }
-    h1 {
-      font-size: 48px;
-      color: #2c3e50;
-      border-bottom: 2px solid #2980b9;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
+    h1, h2 {
+      color: #bb2e1f;
     }
-    h2 {
-      color: #2980b9;
-      margin-top: 40px;
-      margin-bottom: 20px;
-      font-size: 32px;
+    .btn {
+      background-color: #bb2e1f;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
+      margin-top: 1rem;
     }
-    p {
-      font-size: 22px;
-      margin-bottom: 15px;
-      color: #34495e;
+    footer {
+      background-color: #1f1f1f;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
     }
     code {
-      background-color: #dbe9f4;
-      padding: 3px 7px;
-      font-size: 20px;
-      border-radius: 3px;
-      color: #2c3e50;
-    }
-    ul {
-      font-size: 20px;
-      margin-left: 20px;
-      color: #34495e;
-    }
-    ul li {
-      margin-bottom: 12px;
+      background-color: #eee;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
-  <h1>Steak Bot</h1>
-  <p>Steak Bot is a Twitch chat bot that allows viewers to “eat” random steaks using the <code>!bettersteak</code> command.</p>
-  <p>It adds simple interaction to streams by generating random steak messages.</p>
+  <header>
+    <h1>🥩 SteakBot</h1>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#commands">Commands</a>
+      <a href="#invite">Invite</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-  <h2>Features</h2>
-  <ul>
-    <li>Random Steak Generator: Viewers use <code>!bettersteak</code> to get a randomized steak message.</li>
-    <li>Custom Steaks: Streamers and moderators can add custom steak messages using <code>!addsteak YourCustomSteak</code>.</li>
-    <li>Permission Control: Only streamers and moderators can add steaks.</li>
-    <li>Multi-Channel Support: One bot can work in multiple Twitch channels.</li>
-    <li>Always Online: Hosted with uptime services, so no self-hosting needed.</li>
-  </ul>
+  <section id="hero">
+    <h2>The Ultimate Steak-Eating Tracker for Twitch Chat</h2>
+    <p>
+      SteakBot is a fun and interactive Twitch bot that brings a hilarious and bizarre steak-eating experience straight to your chat. Every time a viewer types <code>!bettersteak</code>, the bot serves them a completely random, often absurd steak variation—from a "crispy garlic steak" to a "steak grilled on a lightsaber".
+    </p>
+    <p>
+      With over 100+ unique steak types and a global steak counter for your chat, SteakBot turns eating virtual meat into a full-blown community event.
+    </p>
+    <a href="https://twitch.tv/yourchannel" class="btn">Add SteakBot</a>
+  </section>
+
+  <section id="features">
+    <h2>🔧 Features</h2>
+    <ul>
+      <li><strong>Random Steaks:</strong> Type <code>!bettersteak</code> to get a wacky new steak each time.</li>
+      <li><strong>Shared Meals:</strong> Type <code>!bettersteak @username</code> to share your steak with a friend.</li>
+      <li><strong>Custom Steaks:</strong> Mods/streamers can use <code>!addsteak steak name</code> to add cursed new ideas permanently.</li>
+      <li><strong>Personal Tracking:</strong> <code>!mysteaks</code> shows your personal count and last 5 steaks.</li>
+      <li><strong>Community Tracker:</strong> SteakBot tracks how many steaks your entire chat has eaten together. Updated live!</li>
+      <li><strong>Easy to Deploy:</strong> No database required. Uses local JSON and TXT files. Built with TwitchIO and .env config.</li>
+      <li><strong>Lightweight HTTP Server:</strong> For easy uptime monitoring or pings.</li>
+    </ul>
+  </section>
+
+  <section id="commands">
+    <h2>📜 Commands</h2>
+    <ul>
+      <li><code>!bettersteak</code> – Eat a random steak</li>
+      <li><code>!bettersteak @Bob</code> – Share a steak with another user</li>
+      <li><code>!addsteak steak dipped in nacho cheese</code> – Adds a new steak type (Mods only)</li>
+      <li><code>!mysteaks</code> – Shows your steak count and recent steak history</li>
+    </ul>
+  </section>
+
+  <section id="invite">
+    <h2>🚀 How to Add SteakBot</h2>
+    <p>
+      SteakBot runs on your own Twitch account or a bot account you control. To install:
+    </p>
+    <ol>
+      <li>Clone the GitHub repository (coming soon)</li>
+      <li>Install dependencies and configure your <code>.env</code></li>
+      <li>Run the bot with Python</li>
+    </ol>
+    <p>
+      Need help setting it up? Join our <a href="#contact">Discord</a>.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>📬 Contact & Support</h2>
+    <p>Have a bug report or want to submit new steak ideas? Join our <a href="https://discord.gg/yourinvite">Discord server</a> or email us at <a href="mailto:support@steakbot.com">support@steakbot.com</a>.</p>
+  </section>
+
+  <footer>
+    <p>🥩 SteakBot © 2025 | Proudly powered by steak and chaos</p>
+  </footer>
 </body>
 </html>
