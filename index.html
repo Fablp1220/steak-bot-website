@@ -2,106 +2,151 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SteakBot – The Ultimate Steak-Eating Tracker</title>
+  <title>Steak Bot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #fefefe;
-      color: #333;
-    }
-    header {
-      background-color: #1f1f1f;
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      margin-left: 1rem;
-      color: #fff;
-      text-decoration: none;
-    }
-    section {
-      padding: 2rem;
+      background: linear-gradient(135deg, #e6f0fa, #f9fbfe);
+      color: #222222;
+      padding: 40px;
       max-width: 900px;
       margin: auto;
+      line-height: 1.6;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
-    h1, h2 {
-      color: #bb2e1f;
+    h1 {
+      font-size: 48px;
+      color: #2c3e50;
+      border-bottom: 2px solid #2980b9;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #2980b9;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+    h3 {
+      color: #2c3e50;
+      font-size: 26px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+    p, li {
+      font-size: 20px;
+      color: #34495e;
     }
     code {
-      background-color: #eee;
-      padding: 0.2rem 0.4rem;
-      border-radius: 4px;
-      font-family: monospace;
+      background-color: #dbe9f4;
+      padding: 3px 7px;
+      font-size: 18px;
+      border-radius: 3px;
+      color: #2c3e50;
     }
-    footer {
-      background-color: #1f1f1f;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+    ul {
+      margin-left: 20px;
+      padding-left: 0;
     }
-    p.warning {
-      color: red;
-      font-weight: bold;
-      margin-top: 1rem;
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      overflow-x: auto;
+      font-size: 18px;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🥩 SteakBot</h1>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#commands">Commands</a>
-    </nav>
-  </header>
+  <h1>Steak Bot</h1>
 
-  <section id="hero">
-    <h2>The Ultimate Steak-Eating Tracker for Twitch Chat</h2>
-    <p>
-      SteakBot is a fun and interactive Twitch bot that brings a hilarious and bizarre steak-eating experience straight to your chat. Every time a viewer types <code>!bettersteak</code>, the bot serves them a completely random, often absurd steak variation from a "crispy garlic steak" to a "steak grilled on a lightsaber".
-    </p>
-    <p>
-      With over 10 preset steak types and a global steak counter for your chat, SteakBot turns eating virtual meat into a full-blown community event.
-    </p>
-  </section>
+  <p>Steak Bot is a Twitch chat bot that allows viewers to “eat” random steaks using the <code>!bettersteak</code> command.</p>
+  <p>It adds simple interaction to streams by generating random steak messages.</p>
 
-  <section id="features">
-    <h2>🔧 Features</h2>
-    <ul>
-      <li><strong>Random Steaks:</strong> Type <code>!bettersteak</code> to get a wacky new steak each time.</li>
-      <li><strong>Shared Meals:</strong> Type <code>!bettersteak @username</code> to share your steak with a friend.</li>
-      <li><strong>Custom Steaks:</strong> Mods/streamers can use <code>!addsteak steak name</code> to add cursed new ideas permanently.</li>
-      <li><strong>Personal Tracking:</strong> <code>!mysteaks</code> shows your personal count and last 5 steaks.</li>
-      <li><strong>Community Tracker:</strong> SteakBot tracks how many steaks your entire chat has eaten together. Updated live!</li>
-      <li><strong>Easy to Deploy:</strong> No database required. Uses local JSON and TXT files. Built with TwitchIO and .env config.</li>
-      <li><strong>Lightweight HTTP Server:</strong> For easy uptime monitoring or pings.</li>
-    </ul>
-    <p class="warning">
-      ⚠️ <em>Warning:</em> There could be bugs when using the <code>!addsteak</code> command that might cause custom steaks to disappear.<br/>
-      If you want to add steaks <strong>permanently</strong>, please send a DM with all the steaks you want to add to <strong>fablp1220</strong>.
-    </p>
-  </section>
+  <h2>Features</h2>
+  <ul>
+    <li>Random Steak Generator: Viewers use <code>!bettersteak</code> to get a randomized steak message.</li>
+    <li>Custom Steaks: Streamers and moderators can add custom steak messages using <code>!addsteak YourCustomSteak</code>.</li>
+    <li>Permission Control: Only streamers and moderators can add steaks.</li>
+    <li>Multi-Channel Support: One bot can work in multiple Twitch channels.</li>
+    <li>Always Online: Hosted with uptime services, so no self-hosting needed.</li>
+  </ul>
 
-  <section id="commands">
-    <h2>📜 Commands</h2>
-    <ul>
-      <li><code>!bettersteak</code> – Eat a random steak</li>
-      <li><code>!bettersteak @Bob</code> – Share a steak with another user</li>
-      <li><code>!addsteak steak dipped in nacho cheese</code> – Adds a new steak type (Mods only)</li>
-      <li><code>!mysteaks</code> – Shows your steak count and recent steak history</li>
-    </ul>
-  </section>
+  <h2>The SteakHunt Update</h2>
 
-  <footer>
-    <p>🥩 SteakBot © 2025 | Proudly powered by steak and the breen man</p>
-  </footer>
+  <h3>What is the SteakHunt Update?</h3>
+  <p>The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
+
+  <h3>Daily Reset at 00:00 Germany Time</h3>
+  <p>The steak hunt updates every day at midnight in Germany (based on Berlin time). This is handled using the <code>pytz</code> library, which ensures proper timezone handling including daylight saving time (CEST/CET).</p>
+  <p>A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
+
+  <h3>New Data File: <code>steak_hunt.json</code></h3>
+  <p>This file stores:</p>
+  <ul>
+    <li>The current hunt steak (<code>"steak"</code>)</li>
+    <li>The date it was last generated (<code>"date"</code>)</li>
+  </ul>
+  <p>Example:</p>
+  <pre>
+{
+  "date": "2025-07-04",
+  "steak": "bloody raw steak"
+}
+  </pre>
+  <p>This ensures the hunt steak persists across bot restarts and is only chosen once per day, exactly at 00:00 in Berlin time.</p>
+
+  <h3>Updated Commands</h3>
+  <ul>
+    <li><strong><code>!steakhunt</code></strong><br>
+      Shows the current target steak of the day.<br>
+      Example: “The current steak hunt target is: spicy peppercorn steak. Eat this with <code>!bettersteak</code> to earn a steak point!”
+    </li>
+
+    <li><strong><code>!bettersteak</code></strong><br>
+      Still randomly gives you a steak.<br>
+      New logic: If the steak you eat matches the current hunt steak, you gain 1 steak point.<br>
+      Steak points are saved in the <code>"points"</code> section of <code>steak_inventory.json</code>.
+    </li>
+
+    <li><strong><code>!steakpoints</code></strong><br>
+      Shows how many steak points you have earned.<br>
+      Example: “@coolviewer you have 5 steak point(s)!”
+    </li>
+  </ul>
+
+  <p>Example <code>"points"</code> data:</p>
+  <pre>
+"points": {
+  "username1": 3,
+  "username2": 1
+}
+  </pre>
+
+  <h3>Files Used in the Update</h3>
+  <ul>
+    <li><code>steak_hunt.json</code>: Stores the current hunt steak and date.</li>
+    <li><code>steak_inventory.json</code>: Stores steak inventories and point totals.</li>
+    <li><code>custom_steaks.txt</code>: Stores user-added steaks.</li>
+  </ul>
+
+  <h3>Why This Matters</h3>
+  <p>The SteakHunt system adds daily interaction and competition to your stream. Viewers have a reason to return each day and participate. This feature can also support:</p>
+  <ul>
+    <li>Leaderboards</li>
+    <li>Milestone rewards</li>
+    <li>Monthly steak hunt competitions</li>
+    <li>Announcements when the new daily steak is active</li>
+  </ul>
+
+  <p>Let me know if you want to add:</p>
+  <ul>
+    <li><code>!topsteakhunters</code> to show a leaderboard</li>
+    <li>Auto-announcements when the new steak is chosen</li>
+    <li>Cooldowns or confirmations when points are earned</li>
+  </ul>
 </body>
 </html>
-
 
