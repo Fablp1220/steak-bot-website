@@ -1,71 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Steak Bot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #7a1f1f, #2b0a0a);
-      color: #eee;
-      margin: 0;
-      padding: 20px;
-    }
-    h1, h2, h3 {
-      color: #ffd700;
-    }
-    a {
-      color: #ffae00;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    code {
-      background-color: #333;
-      padding: 2px 5px;
-      border-radius: 3px;
-      font-family: monospace;
-    }
-    pre {
-      background-color: #222;
-      padding: 10px;
-      border-radius: 5px;
-      overflow-x: auto;
-    }
-    .version {
-      margin-top: 40px;
-      font-weight: bold;
-      font-size: 0.9em;
-      text-align: center;
-      color: #ccc;
-    }
-    .update-section {
-      background-color: #3e1a1a;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 30px;
-    }
-    ul {
-      line-height: 1.5;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin: 10px 0;
-    }
-    th, td {
-      border: 1px solid #555;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #5a1f1f;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Steak Bot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Arial&display=swap');
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: #2b0a0a;
+    color: #eee;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Container for steak emojis */
+  .background-steaks {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .background-steaks span {
+    position: absolute;
+    user-select: none;
+    opacity: 0.1;
+    color: #7a1f1f;
+    font-size: var(--size);
+    transform: rotate(var(--rotate));
+  }
+
+  /* Text content on top */
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1, h2, h3 {
+    color: #ffd700;
+  }
+  a {
+    color: #ffae00;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  code {
+    background-color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+  }
+  pre {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  .update-section {
+    background-color: #3e1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+  ul {
+    line-height: 1.5;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+  }
+  th, td {
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #5a1f1f;
+  }
+  .version {
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-align: center;
+    color: #ccc;
+  }
+</style>
 </head>
 <body>
+
+<div class="background-steaks" aria-hidden="true">
+  <!-- Multiple steak emojis with random position, size, rotation -->
+  <span style="--size: 30px; --rotate: 10deg; top: 10%; left: 15%;">🥩</span>
+  <span style="--size: 50px; --rotate: -15deg; top: 40%; left: 5%;">🥩</span>
+  <span style="--size: 40px; --rotate: 25deg; top: 60%; left: 25%;">🥩</span>
+  <span style="--size: 20px; --rotate: -40deg; top: 80%; left: 10%;">🥩</span>
+  <span style="--size: 35px; --rotate: 30deg; top: 30%; left: 70%;">🥩</span>
+  <span style="--size: 45px; --rotate: -20deg; top: 50%; left: 80%;">🥩</span>
+  <span style="--size: 25px; --rotate: 15deg; top: 70%; left: 65%;">🥩</span>
+  <span style="--size: 55px; --rotate: -10deg; top: 15%; left: 90%;">🥩</span>
+  <span style="--size: 30px; --rotate: 5deg; top: 85%; left: 75%;">🥩</span>
+</div>
+
+<div class="content">
   <h1>Steak Bot</h1>
   <p>Steak Bot is a fun and interactive Twitch chat bot that lets viewers "eat" random steaks using the <code>!bettersteak</code> command. It adds humor and engagement to any stream by generating playful steak messages like:</p>
   <p><code>@username has eaten a spicy peppercorn steak!</code></p>
@@ -134,78 +181,13 @@
     <ul>
       <li><code>!topsteakhunters</code> to show a leaderboard.</li>
       <li>An auto-announcement when the new steak is selected at 00:00.</li>
-      <li>A cooldown or confirmation when a steak point is earned.</li>
+      <li>A cooldown or confirmation when a user earns a steak point.</li>
     </ul>
   </div>
 
-  <div class="update-section">
-    <h2>New Update in steak_bot.py</h2>
-    <ol>
-      <li>Perk System Added
-        <ul>
-          <li>Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.</li>
-        </ul>
-      </li>
-      <li>New Command: <code>!getperk</code>
-        <ul>
-          <li>Costs 5 steak points.</li>
-          <li>Grants a random 30-minute perk.</li>
-          <li>Users cannot choose the perk.</li>
-          <li>Perks apply automatically the next time the user uses <code>!bettersteak</code>.</li>
-        </ul>
-      </li>
-      <li>Example usage:
-        <pre>!getperk
-@username received the perk: DoubleSteak — Eat 2 steaks at once! (30 min)</pre>
-      </li>
-    </ol>
+  <div class="version">Version 4.4.1 - Updated July 7, 2025</div>
+</div>
 
-    <h3>Available Perks</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Perk</th>
-          <th>Description</th>
-          <th>Effect</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>DoubleSteak</td>
-          <td>Eat 2 steaks at once</td>
-          <td>Adds 2 of the same steak instead of 1</td>
-        </tr>
-        <tr>
-          <td>HuntBoost</td>
-          <td>25% chance to get the daily hunt steak</td>
-          <td>Replaces your roll with the steak hunt target</td>
-        </tr>
-        <tr>
-          <td>FlavorLuck</td>
-          <td>Filters out bad steaks like “dirty” or “soggy”</td>
-          <td>Prevents those from being picked</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3>How !bettersteak Changes</h3>
-    <p>If a user has any active perks, they are automatically applied:</p>
-    <ul>
-      <li>If the user has DoubleSteak, they get 2 steaks.</li>
-      <li>If the user has HuntBoost, there is a 25% chance they eat the hunt steak directly.</li>
-      <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
-    </ul>
-    <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks will not apply.</p>
-
-    <h3>Workflow</h3>
-    <ul>
-      <li>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.</li>
-      <li>User spends 5 points with <code>!getperk</code> to receive a random perk.</li>
-      <li>Next time they use <code>!bettersteak</code>, the perk applies.</li>
-      <li>Perk lasts 30 minutes.</li>
-      <li>Expired perks are removed automatically.</li>
-    </ul>
-  </div>
 </body>
 </html>
 
