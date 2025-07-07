@@ -57,6 +57,15 @@
       font-size: 18px;
       border-radius: 5px;
     }
+    .version {
+      margin-top: 60px;
+      font-size: 18px;
+      color: #7f8c8d;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+      text-align: center;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -141,10 +150,101 @@
     <li>Announcements when the new daily steak is active</li>
   </ul>
 
-  <p>COMING SOON:</p>
+  <p>Let me know if you want to add:</p>
   <ul>
     <li><code>!topsteakhunters</code> to show a leaderboard</li>
+    <li>Auto-announcements when the new steak is chosen</li>
+    <li>Cooldowns or confirmations when points are earned</li>
   </ul>
+
+  <!-- NEW UPDATE SECTION -->
+  <h2>New Update: Perk System</h2>
+
+  <h3>What is new in steak_bot.py</h3>
+  <ol>
+    <li>Perk System Added<br>
+      Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.
+    </li>
+    <li>New Command: <code>!getperk</code><br>
+      Costs 5 steak points.<br>
+      Grants a random 30-minute perk.<br>
+      Users cannot choose the perk.<br>
+      Perks apply automatically the next time the user uses <code>!bettersteak</code>.<br>
+      Example usage:
+      <pre>!getperk
+@username received the perk: DoubleSteak — Eat 2 steaks at once! (30 min)</pre>
+    </li>
+  </ol>
+
+  <h3>Available Perks</h3>
+  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; font-size: 18px; color: #34495e; margin-bottom: 20px;">
+    <thead>
+      <tr style="background-color: #dbe9f4;">
+        <th>Perk</th>
+        <th>Description</th>
+        <th>Effect</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DoubleSteak</td>
+        <td>Eat 2 steaks at once</td>
+        <td>Adds 2 of the same steak instead of 1</td>
+      </tr>
+      <tr>
+        <td>HuntBoost</td>
+        <td>25% chance to get the daily hunt steak</td>
+        <td>Replaces your roll with the steak hunt target</td>
+      </tr>
+      <tr>
+        <td>FlavorLuck</td>
+        <td>Filters out bad steaks like “dirty” or “soggy”</td>
+        <td>Prevents those from being picked</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>How <code>!bettersteak</code> Changes</h3>
+  <p>If a user has any active perks, they are automatically applied:</p>
+  <ul>
+    <li>If the user has DoubleSteak, they get 2 steaks.</li>
+    <li>If the user has HuntBoost, there is a 25% chance they eat the hunt steak directly.</li>
+    <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
+  </ul>
+  <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks do not apply.</p>
+
+  <h3>Workflow</h3>
+  <ol>
+    <li>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.</li>
+    <li>User spends 5 points with <code>!getperk</code> to receive a random perk.</li>
+    <li>Next time they use <code>!bettersteak</code>, the perk(s) automatically modify the behavior.</li>
+    <li>Perks expire after 30 minutes, and users can get new ones after that.</li>
+  </ol>
+
+  <h3>Example User Flow</h3>
+  <pre>
+User: !bettersteak
+Bot: @User has eaten a dirty steak!
+
+User: !getperk
+Bot: @User received the perk: FlavorLuck, Removes bad steaks! (30 min)
+
+User: !bettersteak
+Bot: @User has eaten a juicy ribeye steak! Total steaks eaten: 47
+  </pre>
+
+  <h3>Summary</h3>
+  <ul>
+    <li>New command <code>!getperk</code> adds strategy to steak points.</li>
+    <li>Perks are random and temporary, making each use exciting.</li>
+    <li><code>!bettersteak</code> now responds to perk effects automatically.</li>
+    <li>Entire system works in a single Python file, no external files needed to understand it.</li>
+  </ul>
+
+  <p>Let me know if you want me to fold all perk logic directly into <code>steak_bot.py</code> to truly keep it as one file, or if you want to add a <code>!myperks</code> command to check active perks.</p>
+
+  <div class="version">Version: 1.1</div>
 </body>
 </html>
+
 
