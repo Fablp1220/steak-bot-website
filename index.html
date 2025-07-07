@@ -2,239 +2,210 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Steak Bot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Steak Bot</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #e6f0fa, #f9fbfe);
-      color: #222222;
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.6;
-      min-height: 100vh;
-      box-sizing: border-box;
+      background: linear-gradient(135deg, #7a1f1f, #2b0a0a);
+      color: #eee;
+      margin: 0;
+      padding: 20px;
     }
-    h1 {
-      font-size: 48px;
-      color: #2c3e50;
-      border-bottom: 2px solid #2980b9;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
+    h1, h2, h3 {
+      color: #ffd700;
     }
-    h2 {
-      color: #2980b9;
-      margin-top: 40px;
-      margin-bottom: 20px;
-      font-size: 32px;
+    a {
+      color: #ffae00;
+      text-decoration: none;
     }
-    h3 {
-      color: #2c3e50;
-      font-size: 26px;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-    p, li {
-      font-size: 20px;
-      color: #34495e;
+    a:hover {
+      text-decoration: underline;
     }
     code {
-      background-color: #dbe9f4;
-      padding: 3px 7px;
-      font-size: 18px;
+      background-color: #333;
+      padding: 2px 5px;
       border-radius: 3px;
-      color: #2c3e50;
-    }
-    ul {
-      margin-left: 20px;
-      padding-left: 0;
+      font-family: monospace;
     }
     pre {
-      background-color: #f4f4f4;
+      background-color: #222;
       padding: 10px;
-      overflow-x: auto;
-      font-size: 18px;
       border-radius: 5px;
+      overflow-x: auto;
     }
     .version {
-      margin-top: 60px;
-      font-size: 18px;
-      color: #7f8c8d;
-      border-top: 1px solid #ddd;
-      padding-top: 15px;
+      margin-top: 40px;
+      font-weight: bold;
+      font-size: 0.9em;
       text-align: center;
-      font-style: italic;
+      color: #ccc;
+    }
+    .update-section {
+      background-color: #3e1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+    ul {
+      line-height: 1.5;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #5a1f1f;
     }
   </style>
 </head>
 <body>
   <h1>Steak Bot</h1>
-
-  <p>Steak Bot is a Twitch chat bot that allows viewers to “eat” random steaks using the <code>!bettersteak</code> command.</p>
-  <p>It adds simple interaction to streams by generating random steak messages.</p>
+  <p>Steak Bot is a fun and interactive Twitch chat bot that lets viewers "eat" random steaks using the <code>!bettersteak</code> command. It adds humor and engagement to any stream by generating playful steak messages like:</p>
+  <p><code>@username has eaten a spicy peppercorn steak!</code></p>
 
   <h2>Features</h2>
   <ul>
-    <li>Random Steak Generator: Viewers use <code>!bettersteak</code> to get a randomized steak message.</li>
-    <li>Custom Steaks: Streamers and moderators can add custom steak messages using <code>!addsteak YourCustomSteak</code>.</li>
-    <li>Permission Control: Only streamers and moderators can add steaks.</li>
-    <li>Multi-Channel Support: One bot can work in multiple Twitch channels.</li>
-    <li>Always Online: Hosted with uptime services, so no self-hosting needed.</li>
+    <li>Random Steak Generator: Viewers use <code>!bettersteak</code> to receive a randomized steak message.</li>
+    <li>Custom Steaks: Streamers and moderators can add their own custom steaks using <code>!addsteak YourCustomSteak</code>.</li>
+    <li>Permission Control: Only streamers and mods can add new steaks to keep things clean and fun.</li>
+    <li>Multi-Channel Support: One bot can serve multiple Twitch channels at once.</li>
+    <li>Always Online (with uptime service + Render): No need to host it yourself.</li>
   </ul>
 
-  <h2>The SteakHunt Update</h2>
+  <div class="update-section">
+    <h2>SteakHunt Update</h2>
+    <h3>What is the SteakHunt Update?</h3>
+    <p>The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
 
-  <h3>What is the SteakHunt Update?</h3>
-  <p>The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
+    <h3>Daily Reset at 00:00 Germany Time</h3>
+    <p>The steak hunt updates every day at midnight in Germany (based on Berlin time).</p>
+    <p>This is handled using the pytz library, which ensures proper timezone handling including daylight saving time (CEST/CET).</p>
+    <p>A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
 
-  <h3>Daily Reset at 00:00 Germany Time</h3>
-  <p>The steak hunt updates every day at midnight in Germany (based on Berlin time). This is handled using the <code>pytz</code> library, which ensures proper timezone handling including daylight saving time (CEST/CET).</p>
-  <p>A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
-
-  <h3>New Data File: <code>steak_hunt.json</code></h3>
-  <p>This file stores:</p>
-  <ul>
-    <li>The current hunt steak (<code>"steak"</code>)</li>
-    <li>The date it was last generated (<code>"date"</code>)</li>
-  </ul>
-  <p>Example:</p>
-  <pre>
-{
+    <h3>New Data File: steak_hunt.json</h3>
+    <p>This file stores:</p>
+    <ul>
+      <li>The current hunt steak ("steak")</li>
+      <li>The date it was last generated ("date")</li>
+    </ul>
+    <p>Example:</p>
+    <pre>{
   "date": "2025-07-04",
   "steak": "bloody raw steak"
-}
-  </pre>
-  <p>This ensures the hunt steak persists across bot restarts and is only chosen once per day, exactly at 00:00 in Berlin time.</p>
+}</pre>
+    <p>This file ensures:</p>
+    <ul>
+      <li>The hunt steak persists across bot restarts.</li>
+      <li>A new steak is only chosen once per day, exactly at 00:00 in Berlin time.</li>
+    </ul>
 
-  <h3>Updated Commands</h3>
-  <ul>
-    <li><strong><code>!steakhunt</code></strong><br>
-      Shows the current target steak of the day.<br>
-      Example: “The current steak hunt target is: spicy peppercorn steak. Eat this with <code>!bettersteak</code> to earn a steak point!”
-    </li>
+    <h3>Updated Commands</h3>
+    <ul>
+      <li><code>!steakhunt</code><br>Shows the current target steak of the day.<br>Example response:<br><code>The current steak hunt target is: spicy peppercorn steak. Eat this with !bettersteak to earn a steak point!</code></li>
+      <li><code>!bettersteak</code> (updated logic)<br>Still randomly gives you a steak.<br>New logic: If the steak you eat matches the current <code>!steakhunt</code> steak, you gain 1 steak point.<br>Your steak point is saved in the "points" section of <code>steak_inventory.json</code>.</li>
+      <li><code>!steakpoints</code><br>Shows how many steak points you have earned by correctly eating the hunt steak.<br>Example:<br><code>@coolviewer you have 5 steak point(s)!</code></li>
+    </ul>
 
-    <li><strong><code>!bettersteak</code></strong><br>
-      Still randomly gives you a steak.<br>
-      New logic: If the steak you eat matches the current hunt steak, you gain 1 steak point.<br>
-      Steak points are saved in the <code>"points"</code> section of <code>steak_inventory.json</code>.
-    </li>
+    <h3>Files Used in the Update</h3>
+    <ul>
+      <li><code>steak_hunt.json</code>: Stores the current hunt steak and date.</li>
+      <li><code>steak_inventory.json</code>: Stores steak inventories and point totals.</li>
+      <li><code>custom_steaks.txt</code>: Still stores user-added steaks.</li>
+    </ul>
 
-    <li><strong><code>!steakpoints</code></strong><br>
-      Shows how many steak points you have earned.<br>
-      Example: “@coolviewer you have 5 steak point(s)!”
-    </li>
-  </ul>
+    <h3>Why this matters</h3>
+    <p>It adds daily interaction and competition to your stream.</p>
+    <p>Viewers have a reason to come back every day.</p>
+    <p>You can build features on top of this:</p>
+    <ul>
+      <li>Leaderboards</li>
+      <li>Milestone rewards</li>
+      <li>Monthly steak hunt competitions</li>
+      <li>Announce when the new daily hunt steak starts</li>
+    </ul>
+    <p>Let me know if you want to add:</p>
+    <ul>
+      <li><code>!topsteakhunters</code> to show a leaderboard.</li>
+      <li>An auto-announcement when the new steak is selected at 00:00.</li>
+      <li>A cooldown or confirmation when a steak point is earned.</li>
+    </ul>
+  </div>
 
-  <p>Example <code>"points"</code> data:</p>
-  <pre>
-"points": {
-  "username1": 3,
-  "username2": 1
-}
-  </pre>
-
-  <h3>Files Used in the Update</h3>
-  <ul>
-    <li><code>steak_hunt.json</code>: Stores the current hunt steak and date.</li>
-    <li><code>steak_inventory.json</code>: Stores steak inventories and point totals.</li>
-    <li><code>custom_steaks.txt</code>: Stores user-added steaks.</li>
-  </ul>
-
-  <h3>Why This Matters</h3>
-  <p>The SteakHunt system adds daily interaction and competition to your stream. Viewers have a reason to return each day and participate. This feature can also support:</p>
-  <ul>
-    <li>Leaderboards</li>
-    <li>Milestone rewards</li>
-    <li>Monthly steak hunt competitions</li>
-    <li>Announcements when the new daily steak is active</li>
-  </ul>
-
-  <p>Let me know if you want to add:</p>
-  <ul>
-    <li><code>!topsteakhunters</code> to show a leaderboard</li>
-    <li>Auto-announcements when the new steak is chosen</li>
-    <li>Cooldowns or confirmations when points are earned</li>
-  </ul>
-
-  <!-- NEW UPDATE SECTION -->
-  <h2>New Update: Perk System</h2>
-
-  <h3>What is new in steak_bot.py</h3>
-  <ol>
-    <li>Perk System Added<br>
-      Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.
-    </li>
-    <li>New Command: <code>!getperk</code><br>
-      Costs 5 steak points.<br>
-      Grants a random 30-minute perk.<br>
-      Users cannot choose the perk.<br>
-      Perks apply automatically the next time the user uses <code>!bettersteak</code>.<br>
-      Example usage:
-      <pre>!getperk
+  <div class="update-section">
+    <h2>New Update in steak_bot.py</h2>
+    <ol>
+      <li>Perk System Added
+        <ul>
+          <li>Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.</li>
+        </ul>
+      </li>
+      <li>New Command: <code>!getperk</code>
+        <ul>
+          <li>Costs 5 steak points.</li>
+          <li>Grants a random 30-minute perk.</li>
+          <li>Users cannot choose the perk.</li>
+          <li>Perks apply automatically the next time the user uses <code>!bettersteak</code>.</li>
+        </ul>
+      </li>
+      <li>Example usage:
+        <pre>!getperk
 @username received the perk: DoubleSteak — Eat 2 steaks at once! (30 min)</pre>
-    </li>
-  </ol>
+      </li>
+    </ol>
 
-  <h3>Available Perks</h3>
-  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; font-size: 18px; color: #34495e; margin-bottom: 20px;">
-    <thead>
-      <tr style="background-color: #dbe9f4;">
-        <th>Perk</th>
-        <th>Description</th>
-        <th>Effect</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>DoubleSteak</td>
-        <td>Eat 2 steaks at once</td>
-        <td>Adds 2 of the same steak instead of 1</td>
-      </tr>
-      <tr>
-        <td>HuntBoost</td>
-        <td>25% chance to get the daily hunt steak</td>
-        <td>Replaces your roll with the steak hunt target</td>
-      </tr>
-      <tr>
-        <td>FlavorLuck</td>
-        <td>Filters out bad steaks like “dirty” or “soggy”</td>
-        <td>Prevents those from being picked</td>
-      </tr>
-    </tbody>
-  </table>
+    <h3>Available Perks</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Perk</th>
+          <th>Description</th>
+          <th>Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DoubleSteak</td>
+          <td>Eat 2 steaks at once</td>
+          <td>Adds 2 of the same steak instead of 1</td>
+        </tr>
+        <tr>
+          <td>HuntBoost</td>
+          <td>25% chance to get the daily hunt steak</td>
+          <td>Replaces your roll with the steak hunt target</td>
+        </tr>
+        <tr>
+          <td>FlavorLuck</td>
+          <td>Filters out bad steaks like “dirty” or “soggy”</td>
+          <td>Prevents those from being picked</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <h3>How <code>!bettersteak</code> Changes</h3>
-  <p>If a user has any active perks, they are automatically applied:</p>
-  <ul>
-    <li>If the user has DoubleSteak, they get 2 steaks.</li>
-    <li>If the user has HuntBoost, there is a 25% chance they eat the hunt steak directly.</li>
-    <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
-  </ul>
-  <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks do not apply.</p>
+    <h3>How !bettersteak Changes</h3>
+    <p>If a user has any active perks, they are automatically applied:</p>
+    <ul>
+      <li>If the user has DoubleSteak, they get 2 steaks.</li>
+      <li>If the user has HuntBoost, there is a 25% chance they eat the hunt steak directly.</li>
+      <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
+    </ul>
+    <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks will not apply.</p>
 
-  <h3>Workflow</h3>
-  <ol>
-    <li>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.</li>
-    <li>User spends 5 points with <code>!getperk</code> to receive a random perk.</li>
-    <li>Next time they use <code>!bettersteak</code>, the perk(s) automatically modify the behavior.</li>
-    <li>Perks expire after 30 minutes, and users can get new ones after that.</li>
-  </ol>
-
-  <h3>Example User Flow</h3>
-  <pre>
-User: !bettersteak
-Bot: @User has eaten a dirty steak!
-
-User: !getperk
-Bot: @User received the perk: FlavorLuck, Removes bad steaks! (30 min)
-
-User: !bettersteak
-Bot: @User has eaten a juicy ribeye steak! Total steaks eaten: 47
-  </pre>
-
-  <div class="version">Version: 1.1</div>
+    <h3>Workflow</h3>
+    <ul>
+      <li>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.</li>
+      <li>User spends 5 points with <code>!getperk</code> to receive a random perk.</li>
+      <li>Next time they use <code>!bettersteak</code>, the perk applies.</li>
+      <li>Perk lasts 30 minutes.</li>
+      <li>Expired perks are removed automatically.</li>
+    </ul>
+  </div>
 </body>
 </html>
-
 
