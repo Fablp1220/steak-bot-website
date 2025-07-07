@@ -3,119 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Steak Bot</title>
+<title>Steak Bot - Twitch Chat Bot</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Arial&display=swap');
-  
+  /* Background gradient */
   body {
-    font-family: Arial, sans-serif;
-    background: #2b0a0a;
+    background: linear-gradient(180deg, #1a1a1a 0%, #333333 100%);
     color: #eee;
-    margin: 0;
-    padding: 20px;
-    position: relative;
-    overflow-x: hidden;
-    min-height: 200vh; /* make page tall enough to scroll */
-  }
-
-  .background-steaks {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 0;
-    overflow: visible;
-  }
-
-  .background-steaks span {
-    position: absolute;
-    user-select: none;
-    color: #7a1f1f;
-    font-size: var(--size);
-    transform-origin: center center;
-    will-change: transform;
-    opacity: 0.1;
-  }
-
-  .content {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  h1, h2, h3 {
-    color: #ffd700;
-  }
-  a {
-    color: #ffae00;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  code {
-    background-color: #333;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: monospace;
-  }
-  pre {
-    background-color: #222;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
-  .update-section {
-    background-color: #3e1a1a;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 30px;
-  }
-  ul {
+    font-family: Arial, sans-serif;
     line-height: 1.5;
+    margin: 0;
+    padding: 0 0 40px 0;
   }
-  table {
-    border-collapse: collapse;
+
+  /* Fixed header */
+  header {
+    position: fixed;
+    top: 0;
     width: 100%;
+    background-color: #222;
+    color: #eee;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 24px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+  }
+
+  /* To avoid content hidden behind header */
+  .container {
+    max-width: 900px;
+    margin: 80px auto 0 auto;
+    padding: 0 15px;
+  }
+
+  h1, h2 {
+    font-weight: bold;
+    color: #f1f1f1;
+  }
+
+  p, ul, li {
+    color: #ddd;
+  }
+
+  /* Code block styling */
+  code, pre {
+    background-color: #2c2c2c;
+    color: #f4f4f4;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    display: block;
+    white-space: pre-wrap;
     margin: 10px 0;
   }
-  th, td {
-    border: 1px solid #555;
-    padding: 8px;
-    text-align: left;
+
+  /* Section separators */
+  hr {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 30px 0;
   }
-  th {
-    background-color: #5a1f1f;
+
+  /* Link styling */
+  a {
+    color: #d14836;
+    text-decoration: none;
+    border-bottom: 1px dotted #d14836;
   }
-  .version {
-    margin-top: 40px;
-    font-weight: bold;
-    font-size: 0.9em;
-    text-align: center;
-    color: #ccc;
+
+  a:hover {
+    color: #f25c4a;
+    border-bottom: 1px solid #f25c4a;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 </style>
 </head>
 <body>
 
-<div class="background-steaks" aria-hidden="true">
-  <span style="--size: 30px; top: 10%; left: 15%;">🥩</span>
-  <span style="--size: 50px; top: 40%; left: 5%;">🥩</span>
-  <span style="--size: 40px; top: 60%; left: 25%;">🥩</span>
-  <span style="--size: 20px; top: 80%; left: 10%;">🥩</span>
-  <span style="--size: 35px; top: 30%; left: 70%;">🥩</span>
-  <span style="--size: 45px; top: 50%; left: 80%;">🥩</span>
-  <span style="--size: 25px; top: 70%; left: 65%;">🥩</span>
-  <span style="--size: 55px; top: 15%; left: 90%;">🥩</span>
-  <span style="--size: 30px; top: 85%; left: 75%;">🥩</span>
-</div>
+<header>
+  Steak Bot
+</header>
 
-<div class="content">
-  <h1>Steak Bot</h1>
+<div class="container">
+
+  <h1>Steak Bot - Twitch Chat Bot</h1>
+
   <p>Steak Bot is a fun and interactive Twitch chat bot that lets viewers "eat" random steaks using the <code>!bettersteak</code> command. It adds humor and engagement to any stream by generating playful steak messages like:</p>
-  <p><code>@username has eaten a spicy peppercorn steak!</code></p>
+
+  <p><strong>@username has eaten a spicy peppercorn steak!</strong></p>
 
   <h2>Features</h2>
   <ul>
@@ -126,121 +106,137 @@
     <li>Always Online (with uptime service + Render): No need to host it yourself.</li>
   </ul>
 
-  <div class="update-section">
-    <h2>SteakHunt Update</h2>
-    <h3>What is the SteakHunt Update?</h3>
-    <p>The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
+  <hr />
 
-    <h3>Daily Reset at 00:00 Germany Time</h3>
-    <p>The steak hunt updates every day at midnight in Germany (based on Berlin time).</p>
-    <p>This is handled using the pytz library, which ensures proper timezone handling including daylight saving time (CEST/CET).</p>
-    <p>A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
+  <h2>SteakHunt Update</h2>
 
-    <h3>New Data File: steak_hunt.json</h3>
-    <p>This file stores:</p>
-    <ul>
-      <li>The current hunt steak ("steak")</li>
-      <li>The date it was last generated ("date")</li>
-    </ul>
-    <p>Example:</p>
-    <pre>{
+  <p><strong>What is the SteakHunt Update?</strong><br />
+  The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
+
+  <p><strong>Daily Reset at 00:00 Germany Time</strong><br />
+  The steak hunt updates every day at midnight in Germany (based on Berlin time). This is handled using the pytz library, which ensures proper timezone handling including daylight saving time (CEST/CET). A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
+
+  <p><strong>New Data File: <code>steak_hunt.json</code></strong><br />
+  This file stores:<br />
+  - The current hunt steak ("steak")<br />
+  - The date it was last generated ("date")</p>
+
+  <pre>{
   "date": "2025-07-04",
   "steak": "bloody raw steak"
 }</pre>
-    <p>This file ensures:</p>
-    <ul>
-      <li>The hunt steak persists across bot restarts.</li>
-      <li>A new steak is only chosen once per day, exactly at 00:00 in Berlin time.</li>
-    </ul>
 
-    <h3>Updated Commands</h3>
-    <ul>
-      <li><code>!steakhunt</code><br>Shows the current target steak of the day.<br>Example response:<br><code>The current steak hunt target is: spicy peppercorn steak. Eat this with !bettersteak to earn a steak point!</code></li>
-      <li><code>!bettersteak</code> (updated logic)<br>Still randomly gives you a steak.<br>New logic: If the steak you eat matches the current <code>!steakhunt</code> steak, you gain 1 steak point.<br>Your steak point is saved in the "points" section of <code>steak_inventory.json</code>.</li>
-      <li><code>!steakpoints</code><br>Shows how many steak points you have earned by correctly eating the hunt steak.<br>Example:<br><code>@coolviewer you have 5 steak point(s)!</code></li>
-    </ul>
+  <p>This file ensures:<br />
+  - The hunt steak persists across bot restarts.<br />
+  - A new steak is only chosen once per day, exactly at 00:00 in Berlin time.</p>
 
-    <h3>Files Used in the Update</h3>
-    <ul>
-      <li><code>steak_hunt.json</code>: Stores the current hunt steak and date.</li>
-      <li><code>steak_inventory.json</code>: Stores steak inventories and point totals.</li>
-      <li><code>custom_steaks.txt</code>: Still stores user-added steaks.</li>
-    </ul>
+  <p><strong>Updated Commands</strong></p>
+  <ul>
+    <li><code>!steakhunt</code>: Shows the current target steak of the day.<br />
+    Example response:<br />
+    "The current steak hunt target is: spicy peppercorn steak. Eat this with <code>!bettersteak</code> to earn a steak point!"</li>
+    <li><code>!bettersteak</code> (updated logic): Still randomly gives you a steak.<br />
+    New logic: If the steak you eat matches the current <code>!steakhunt</code> steak, you gain 1 steak point.<br />
+    Your steak point is saved in the "points" section of <code>steak_inventory.json</code>.</li>
+    <li><code>!steakpoints</code>: Shows how many steak points you have earned by correctly eating the hunt steak.<br />
+    Example:<br />
+    "@coolviewer you have 5 steak point(s)!"</li>
+  </ul>
 
-    <h3>Why this matters</h3>
-    <p>It adds daily interaction and competition to your stream.</p>
-    <p>Viewers have a reason to come back every day.</p>
-    <p>You can build features on top of this:</p>
-    <ul>
-      <li>Leaderboards</li>
-      <li>Milestone rewards</li>
-      <li>Monthly steak hunt competitions</li>
-      <li>Announce when the new daily hunt steak starts</li>
-    </ul>
-    <p>Let me know if you want to add:</p>
-    <ul>
-      <li><code>!topsteakhunters</code> to show a leaderboard.</li>
-      <li>An auto-announcement when the new steak is selected at 00:00.</li>
-      <li>A cooldown or confirmation when a user earns a steak point.</li>
-    </ul>
-  </div>
+  <p><strong>Files Used in the Update</strong><br />
+  <code>steak_hunt.json</code>: Stores the current hunt steak and date.<br />
+  <code>steak_inventory.json</code>: Stores steak inventories and point totals.<br />
+  <code>custom_steaks.txt</code>: Still stores user-added steaks.</p>
 
-  <div class="version">Version 4.4.1 - Updated July 7, 2025</div>
+  <p><strong>Why this matters</strong><br />
+  It adds daily interaction and competition to your stream. Viewers have a reason to come back every day. You can build features on top of this like leaderboards, milestone rewards, monthly steak hunt competitions, and auto announcements.</p>
+
+  <hr />
+
+  <h2>New Update</h2>
+
+  <h3>What's New in steak_bot.py</h3>
+
+  <ol>
+    <li><strong>Perk System Added</strong><br />
+    Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.</li>
+
+    <li><strong>New Command: <code>!getperk</code></strong><br />
+    Costs 5 steak points.<br />
+    Grants a random 30-minute perk.<br />
+    Users can’t choose the perk.<br />
+    Perks apply automatically the next time the user uses <code>!bettersteak</code>.</li>
+  </ol>
+
+  <p><strong>Example usage:</strong></p>
+  <pre>!getperk
+@username received the perk: DoubleSteak — Eat 2 steaks at once! (30 min)</pre>
+
+  <h3>Available Perks</h3>
+
+  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; border-color: #444; color: #ddd;">
+    <thead>
+      <tr>
+        <th>Perk</th>
+        <th>Description</th>
+        <th>Effect</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DoubleSteak</td>
+        <td>Eat 2 steaks at once</td>
+        <td>Adds 2 of the same steak instead of 1</td>
+      </tr>
+      <tr>
+        <td>HuntBoost</td>
+        <td>25% chance to get the daily hunt steak</td>
+        <td>Replaces your roll with the steak hunt target</td>
+      </tr>
+      <tr>
+        <td>FlavorLuck</td>
+        <td>Filters out bad steaks like “dirty” or “soggy”</td>
+        <td>Prevents those from being picked</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>How <code>!bettersteak</code> Changes</h3>
+
+  <p>If a user has any active perks, they are automatically applied:</p>
+  <ul>
+    <li>If the user has DoubleSteak, they get 2 steaks.</li>
+    <li>If the user has HuntBoost, there's a 25% chance they eat the hunt steak directly.</li>
+    <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
+  </ul>
+
+  <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks won’t apply.</p>
+
+  <h3>Workflow</h3>
+
+  <p>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.<br />
+  User spends 5 points with <code>!getperk</code> to receive a random perk.<br />
+  Next time they use <code>!bettersteak</code>, the perk(s) automatically modify the behavior.<br />
+  Perks expire after 30 minutes, and users can get new ones after that.</p>
+
+  <h3>Example User Flow</h3>
+
+  <pre>User: !bettersteak
+Bot: @User has eaten a dirty steak!
+
+User: !getperk
+Bot: @User received the perk: FlavorLuck, Removes bad steaks! (30 min)
+
+User: !bettersteak
+Bot: @User has eaten a juicy ribeye steak! Total steaks eaten: 47
+</pre>
+
+  <hr />
+
+  <p style="text-align:center; color:#888; margin-top:50px;">Version 1.0</p>
+
 </div>
-
-<script>
-  const steaks = document.querySelectorAll('.background-steaks span');
-  
-  // Store initial positions as percentages for vertical position parallax
-  const steakData = [];
-  steaks.forEach((steak, i) => {
-    steakData[i] = {
-      baseTop: parseFloat(steak.style.top),  // percentage
-      left: steak.style.left,
-      size: parseInt(steak.style.getPropertyValue('--size')),
-      rotation: Math.random() * 360,
-      scale: 1,
-      scaleDirection: 1,
-      rotationSpeed: (Math.random() * 0.2) + 0.05, // degrees per frame
-      scaleSpeed: (Math.random() * 0.005) + 0.001, // scale change per frame
-      scaleMin: 0.85,
-      scaleMax: 1.15,
-    };
-  });
-
-  // Parallax effect for vertical position on scroll at half speed
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    steaks.forEach((steak, i) => {
-      const data = steakData[i];
-      const newTop = data.baseTop + scrollY * 0.05; // 0.05 = half speed approx for viewport percentage
-      steak.style.top = `${newTop}%`;
-    });
-  });
-
-  // Animate rotation and scaling continuously
-  function animate() {
-    steaks.forEach((steak, i) => {
-      const data = steakData[i];
-      
-      // Update rotation
-      data.rotation += data.rotationSpeed;
-      if (data.rotation > 360) data.rotation -= 360;
-      
-      // Update scale
-      data.scale += data.scaleSpeed * data.scaleDirection;
-      if (data.scale > data.scaleMax || data.scale < data.scaleMin) {
-        data.scaleDirection *= -1;
-      }
-
-      steak.style.transform = `rotate(${data.rotation}deg) scale(${data.scale.toFixed(3)})`;
-    });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
 
 </body>
 </html>
+
