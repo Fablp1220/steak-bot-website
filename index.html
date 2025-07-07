@@ -3,239 +3,434 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Steak Bot - Twitch Chat Bot</title>
+<title>Steak Bot</title>
 <style>
-  /* Background gradient */
+  /* Basic Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #551111, #330000 70%);
+    color: #f5f1e9;
+    overflow-x: hidden;
+  }
   body {
-    background: linear-gradient(180deg, #1a1a1a 0%, #333333 100%);
-    color: #eee;
-    font-family: Arial, sans-serif;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0 0 40px 0;
+    position: relative;
   }
-
-  /* Fixed header */
-  header {
+  /* Parallax steak background layers */
+  .parallax-layer {
     position: fixed;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.07;
+    will-change: transform;
+    user-select: none;
+  }
+  #parallax1 {
+    background-image: url('https://i.imgur.com/8V5X9mF.png'); /* steak silhouette */
+    z-index: 0;
+    filter: drop-shadow(0 0 6px #a22);
+  }
+  #parallax2 {
+    background-image: url('https://i.imgur.com/pkQe3Y8.png'); /* grill marks */
+    z-index: 1;
+    opacity: 0.03;
+    filter: blur(1px);
+  }
+  /* Sticky Header */
+  header {
+    position: sticky;
     top: 0;
-    width: 100%;
-    background-color: #222;
-    color: #eee;
-    padding: 15px 20px;
-    font-weight: bold;
-    font-size: 24px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    z-index: 1000;
+    background: #330000cc;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+    backdrop-filter: saturate(180%) blur(8px);
   }
-
-  /* To avoid content hidden behind header */
-  .container {
-    max-width: 900px;
-    margin: 80px auto 0 auto;
-    padding: 0 15px;
+  header img {
+    height: 40px;
+    transition: height 0.3s ease;
   }
-
+  header.shrink img {
+    height: 25px;
+  }
+  /* Main Container */
+  main {
+    max-width: 1000px;
+    margin: 3rem auto 6rem;
+    padding: 0 1rem;
+  }
+  /* Section Titles */
   h1, h2 {
-    font-weight: bold;
-    color: #f1f1f1;
-  }
-
-  p, ul, li {
-    color: #ddd;
-  }
-
-  /* Code block styling */
-  code, pre {
-    background-color: #2c2c2c;
-    color: #f4f4f4;
-    padding: 6px 10px;
-    border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9em;
-    display: block;
-    white-space: pre-wrap;
-    margin: 10px 0;
+    font-weight: 900;
+    color: #fbd27f;
+    margin-bottom: 1rem;
+    text-shadow:
+       0 0 5px #fbd27f,
+       0 0 10px #d18a00;
   }
-
-  /* Section separators */
-  hr {
+  h1 {
+    font-size: 3rem;
+    letter-spacing: 0.1em;
+  }
+  h2 {
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+  /* Paragraphs */
+  p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #f0e8d7;
+  }
+  /* Command Block */
+  .command {
+    font-family: 'Consolas', monospace;
+    background: #4b1b0d;
+    padding: 0.4rem 0.7rem;
+    border-radius: 5px;
+    display: inline-block;
+    color: #f9b44c;
+    cursor: default;
+    user-select: all;
+  }
+  /* Card Grid */
+  .card-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  }
+  /* Perk Cards */
+  .perk-card {
+    background: #5b1e0fcc;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    box-shadow:
+      0 0 10px #a45c29,
+      inset 0 0 6px #fbd27f;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    color: #f6e8c3;
+    font-weight: 600;
+    user-select: none;
+  }
+  .perk-card:hover {
+    transform: scale(1.05) rotate(3deg);
+    box-shadow:
+      0 0 15px #ffb800,
+      inset 0 0 10px #fffacd;
+  }
+  /* Tooltip Container */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #fbd27f;
+  }
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #3a1200dd;
+    color: #fbd27f;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 150;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.9rem;
+    user-select: none;
+    box-shadow: 0 0 10px #aa5500cc;
+  }
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  /* Floating Steak Button */
+  .steak-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #a13900;
     border: none;
-    border-top: 1px solid #444;
-    margin: 30px 0;
+    padding: 1rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #fff6d1;
+    cursor: pointer;
+    box-shadow:
+      0 0 12px #e28b0f,
+      inset 0 0 6px #fbc02d;
+    transition: transform 0.2s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
   }
-
-  /* Link styling */
-  a {
-    color: #d14836;
-    text-decoration: none;
-    border-bottom: 1px dotted #d14836;
+  .steak-btn:hover {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow:
+      0 0 20px #ffb800,
+      inset 0 0 10px #fffacd;
   }
-
-  a:hover {
-    color: #f25c4a;
-    border-bottom: 1px solid #f25c4a;
+  .steak-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #fff6d1;
+    filter: drop-shadow(0 0 2px #a14c00);
   }
-
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
+  /* Confetti Container */
+  #confetti-container {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 200;
+    overflow: visible;
+  }
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+    color: #fbd27faa;
+    user-select: none;
+    letter-spacing: 0.05em;
+  }
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #2e0c00;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #a64e00;
+    border-radius: 5px;
+  }
+  /* Steak spinning/easing animation container */
+  #steak-animation-container {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    z-index: 5;
+    width: 200px;
+    height: 200px;
+    user-select: none;
+  }
+  .steak-spin {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('https://i.imgur.com/8V5X9mF.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    will-change: transform;
+    animation-timing-function: ease-in-out;
   }
 </style>
 </head>
 <body>
 
+<div id="parallax1" class="parallax-layer"></div>
+<div id="parallax2" class="parallax-layer"></div>
+
 <header>
-  Steak Bot
+  <img src="https://i.imgur.com/8V5X9mF.png" alt="Steak Bot Logo" />
+  STEAK BOT WEBSITE
 </header>
 
-<div class="container">
-
-  <h1>Steak Bot - Twitch Chat Bot</h1>
-
-  <p>Steak Bot is a fun and interactive Twitch chat bot that lets viewers "eat" random steaks using the <code>!bettersteak</code> command. It adds humor and engagement to any stream by generating playful steak messages like:</p>
-
-  <p><strong>@username has eaten a spicy peppercorn steak!</strong></p>
+<main>
+  <h1>Steak Bot</h1>
+  <p>
+    Steak Bot is a fun and interactive Twitch chat bot that lets viewers “eat” random steaks using the <span class="command">!bettersteak</span> command.
+    It adds humor and engagement to any stream by generating playful steak messages like:
+  </p>
+  <p><em>@username has eaten a spicy peppercorn steak!</em></p>
 
   <h2>Features</h2>
   <ul>
-    <li>Random Steak Generator: Viewers use <code>!bettersteak</code> to receive a randomized steak message.</li>
-    <li>Custom Steaks: Streamers and moderators can add their own custom steaks using <code>!addsteak YourCustomSteak</code>.</li>
+    <li>Random Steak Generator: Viewers use <span class="command">!bettersteak</span> to receive a randomized steak message.</li>
+    <li>Custom Steaks: Streamers and moderators can add their own custom steaks using <span class="command">!addsteak YourCustomSteak</span>.</li>
     <li>Permission Control: Only streamers and mods can add new steaks to keep things clean and fun.</li>
     <li>Multi-Channel Support: One bot can serve multiple Twitch channels at once.</li>
     <li>Always Online (with uptime service + Render): No need to host it yourself.</li>
   </ul>
 
-  <hr />
-
   <h2>SteakHunt Update</h2>
+  <p>
+    What is the SteakHunt Update?<br />
+    The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <span class="command">!bettersteak</span> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <span class="command">!steakpoints</span>.
+  </p>
+  <p>
+    Daily Reset at 00:00 Germany Time (CEST).
+  </p>
 
-  <p><strong>What is the SteakHunt Update?</strong><br />
-  The SteakHunt Update adds a daily rotating target steak that viewers can try to eat using the <code>!bettersteak</code> command. If they succeed in eating the exact daily hunt steak, they earn 1 steak point, which is saved permanently and can be viewed with <code>!steakpoints</code>.</p>
+  <h2>Available Perks</h2>
+  <div class="card-grid" id="perk-cards">
+    <!-- Perks loaded here dynamically -->
+  </div>
 
-  <p><strong>Daily Reset at 00:00 Germany Time</strong><br />
-  The steak hunt updates every day at midnight in Germany (based on Berlin time). This is handled using the pytz library, which ensures proper timezone handling including daylight saving time (CEST/CET). A new steak is randomly chosen each day from the full list (default + custom steaks).</p>
-
-  <p><strong>New Data File: <code>steak_hunt.json</code></strong><br />
-  This file stores:<br />
-  - The current hunt steak ("steak")<br />
-  - The date it was last generated ("date")</p>
-
-  <pre>{
-  "date": "2025-07-04",
-  "steak": "bloody raw steak"
-}</pre>
-
-  <p>This file ensures:<br />
-  - The hunt steak persists across bot restarts.<br />
-  - A new steak is only chosen once per day, exactly at 00:00 in Berlin time.</p>
-
-  <p><strong>Updated Commands</strong></p>
+  <h2>Commands</h2>
   <ul>
-    <li><code>!steakhunt</code>: Shows the current target steak of the day.<br />
-    Example response:<br />
-    "The current steak hunt target is: spicy peppercorn steak. Eat this with <code>!bettersteak</code> to earn a steak point!"</li>
-    <li><code>!bettersteak</code> (updated logic): Still randomly gives you a steak.<br />
-    New logic: If the steak you eat matches the current <code>!steakhunt</code> steak, you gain 1 steak point.<br />
-    Your steak point is saved in the "points" section of <code>steak_inventory.json</code>.</li>
-    <li><code>!steakpoints</code>: Shows how many steak points you have earned by correctly eating the hunt steak.<br />
-    Example:<br />
-    "@coolviewer you have 5 steak point(s)!"</li>
+    <li><span class="command">!bettersteak</span>: Eat a random steak and get a fun message.</li>
+    <li><span class="command">!addsteak &lt;steakName&gt;</span>: Add a custom steak (streamer/mod only).</li>
+    <li><span class="command">!steakpoints</span>: Check your earned steak points.</li>
+    <li><span class="command">!steakhunt</span>: Shows the current hunt steak.</li>
   </ul>
+</main>
 
-  <p><strong>Files Used in the Update</strong><br />
-  <code>steak_hunt.json</code>: Stores the current hunt steak and date.<br />
-  <code>steak_inventory.json</code>: Stores steak inventories and point totals.<br />
-  <code>custom_steaks.txt</code>: Still stores user-added steaks.</p>
+<button class="steak-btn" title="Eat a Steak">
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <path d="M54 10c-4 4-8 8-12 12-4 4-8 8-12 12l8 8 8-8 12-12z" />
+  </svg>
+  Eat Steak
+</button>
 
-  <p><strong>Why this matters</strong><br />
-  It adds daily interaction and competition to your stream. Viewers have a reason to come back every day. You can build features on top of this like leaderboards, milestone rewards, monthly steak hunt competitions, and auto announcements.</p>
+<footer>
+  STEAK BOT &nbsp;|&nbsp; Version 1.0.0 &nbsp;|&nbsp; Made with 🥩 & 🍖
+</footer>
 
-  <hr />
+<div id="confetti-container"></div>
+<div id="steak-animation-container"></div>
 
-  <h2>New Update</h2>
+<script>
+  // Sticky header shrink on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 40) {
+      header.classList.add('shrink');
+    } else {
+      header.classList.remove('shrink');
+    }
+  });
 
-  <h3>What's New in steak_bot.py</h3>
+  // Parallax background layers scroll handler - steaks move half scroll speed
+  const parallax1 = document.getElementById('parallax1');
+  const parallax2 = document.getElementById('parallax2');
 
-  <ol>
-    <li><strong>Perk System Added</strong><br />
-    Users can now spend steak points to get random temporary perks that affect <code>!bettersteak</code>.</li>
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    parallax1.style.transform = `translateY(${scrollY * 0.5}px)`;
+    parallax2.style.transform = `translateY(${scrollY * 0.25}px)`;
+  });
 
-    <li><strong>New Command: <code>!getperk</code></strong><br />
-    Costs 5 steak points.<br />
-    Grants a random 30-minute perk.<br />
-    Users can’t choose the perk.<br />
-    Perks apply automatically the next time the user uses <code>!bettersteak</code>.</li>
-  </ol>
+  // Sample perks data
+  const perks = [
+    {name: "Double Steak Points", desc: "For 30 minutes, you earn double steak points on successful SteakHunt steaks."},
+    {name: "Increased SteakHunt Chance", desc: "Your chance to get the SteakHunt steak is increased for 30 minutes."},
+    {name: "Steak Sizzle Boost", desc: "Animated sizzle effect around your steak messages for 30 minutes."},
+    {name: "Steak Hunter’s Luck", desc: "Slightly increases your luck to find rare steak messages."},
+    {name: "Juicy Steak Skin", desc: "Your steak messages appear with a juicy animated skin for 30 minutes."},
+  ];
 
-  <p><strong>Example usage:</strong></p>
-  <pre>!getperk
-@username received the perk: DoubleSteak — Eat 2 steaks at once! (30 min)</pre>
+  const perksContainer = document.getElementById('perk-cards');
+  perks.forEach(({name, desc}) => {
+    const div = document.createElement('div');
+    div.className = 'perk-card tooltip';
+    div.textContent = name;
+    const tooltip = document.createElement('span');
+    tooltip.className = 'tooltiptext';
+    tooltip.textContent = desc;
+    div.appendChild(tooltip);
+    perksContainer.appendChild(div);
+  });
 
-  <h3>Available Perks</h3>
+  // Confetti on earning steak points (trigger example every 15 seconds)
+  const confettiContainer = document.getElementById('confetti-container');
+  function createConfetti() {
+    const colors = ['#ffb300','#ff6f00','#e65100','#ffcc80','#ffa726'];
+    for(let i = 0; i < 30; i++) {
+      const confetti = document.createElement('div');
+      confetti.style.position = 'fixed';
+      confetti.style.width = '6px';
+      confetti.style.height = '10px';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      confetti.style.top = `${Math.random()*window.innerHeight}px`;
+      confetti.style.left = `${Math.random()*window.innerWidth}px`;
+      confetti.style.opacity = '0.9';
+      confetti.style.transform = `rotate(${Math.random()*360}deg)`;
+      confetti.style.borderRadius = '2px';
+      confetti.style.animation = `confetti-fall 2s ease forwards`;
+      confettiContainer.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 2200);
+    }
+  }
+  // Confetti keyframe injection
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = `
+    @keyframes confetti-fall {
+      0% {opacity: 0.9; transform: translateY(0) rotate(0deg);}
+      100% {opacity: 0; transform: translateY(150px) rotate(720deg);}
+    }
+  `;
+  document.head.appendChild(styleSheet);
 
-  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; border-color: #444; color: #ddd;">
-    <thead>
-      <tr>
-        <th>Perk</th>
-        <th>Description</th>
-        <th>Effect</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>DoubleSteak</td>
-        <td>Eat 2 steaks at once</td>
-        <td>Adds 2 of the same steak instead of 1</td>
-      </tr>
-      <tr>
-        <td>HuntBoost</td>
-        <td>25% chance to get the daily hunt steak</td>
-        <td>Replaces your roll with the steak hunt target</td>
-      </tr>
-      <tr>
-        <td>FlavorLuck</td>
-        <td>Filters out bad steaks like “dirty” or “soggy”</td>
-        <td>Prevents those from being picked</td>
-      </tr>
-    </tbody>
-  </table>
+  setInterval(createConfetti, 15000);
 
-  <h3>How <code>!bettersteak</code> Changes</h3>
+  // Cursor change to steak knife on buttons
+  document.querySelectorAll('button, .command').forEach(el => {
+    el.style.cursor = 'url("https://i.imgur.com/lWqQpNB.png"), auto'; // steak knife cursor img
+  });
 
-  <p>If a user has any active perks, they are automatically applied:</p>
-  <ul>
-    <li>If the user has DoubleSteak, they get 2 steaks.</li>
-    <li>If the user has HuntBoost, there's a 25% chance they eat the hunt steak directly.</li>
-    <li>If the user has FlavorLuck, all bad steaks are removed from the pool before selection.</li>
-  </ul>
+  // Steak spin & size random easing animations
+  const steakContainer = document.getElementById('steak-animation-container');
+  const steaks = [];
+  const steakCount = 6;
+  const steakImgUrl = 'https://i.imgur.com/8V5X9mF.png';
 
-  <p>The system also handles perk expiration (30 minutes from when the perk is earned), so expired perks won’t apply.</p>
+  function randomRange(min, max) {
+    return Math.random()*(max-min)+min;
+  }
+  for(let i=0; i<steakCount; i++) {
+    const div = document.createElement('div');
+    div.className = 'steak-spin';
+    div.style.left = `${randomRange(-50, 150)}px`;
+    div.style.top = `${randomRange(0, 140)}px`;
+    div.style.transformOrigin = 'center center';
+    steakContainer.appendChild(div);
+    steaks.push({
+      el: div,
+      angle: randomRange(0,360),
+      size: randomRange(0.6, 1.2),
+      sizeDir: Math.random() > 0.5 ? 1 : -1,
+      sizeSpeed: randomRange(0.002, 0.008),
+      angleSpeed: randomRange(0.3, 1.2),
+    });
+  }
 
-  <h3>Workflow</h3>
-
-  <p>User earns steak points by eating the hunt steak with <code>!bettersteak</code>.<br />
-  User spends 5 points with <code>!getperk</code> to receive a random perk.<br />
-  Next time they use <code>!bettersteak</code>, the perk(s) automatically modify the behavior.<br />
-  Perks expire after 30 minutes, and users can get new ones after that.</p>
-
-  <h3>Example User Flow</h3>
-
-  <pre>User: !bettersteak
-Bot: @User has eaten a dirty steak!
-
-User: !getperk
-Bot: @User received the perk: FlavorLuck, Removes bad steaks! (30 min)
-
-User: !bettersteak
-Bot: @User has eaten a juicy ribeye steak! Total steaks eaten: 47
-</pre>
-
-  <hr />
-
-  <p style="text-align:center; color:#888; margin-top:50px;">Version 1.0</p>
-
-</div>
+  function animateSteaks() {
+    steaks.forEach(s => {
+      s.angle = (s.angle + s.angleSpeed) % 360;
+      s.size += s.sizeSpeed * s.sizeDir;
+      if(s.size > 1.3 || s.size < 0.6) s.sizeDir *= -1;
+      s.el.style.transform = `rotate(${s.angle}deg) scale(${s.size.toFixed(2)})`;
+    });
+    requestAnimationFrame(animateSteaks);
+  }
+  animateSteaks();
+</script>
 
 </body>
 </html>
