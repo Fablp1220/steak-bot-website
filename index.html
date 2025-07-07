@@ -15,9 +15,9 @@
     padding: 20px;
     position: relative;
     overflow-x: hidden;
+    min-height: 200vh; /* make page tall enough to scroll */
   }
 
-  /* Container for steak emojis */
   .background-steaks {
     position: fixed;
     top: 0; left: 0;
@@ -25,18 +25,19 @@
     height: 100vh;
     pointer-events: none;
     z-index: 0;
+    overflow: visible;
   }
 
   .background-steaks span {
     position: absolute;
     user-select: none;
-    opacity: 0.1;
     color: #7a1f1f;
     font-size: var(--size);
-    transform: rotate(var(--rotate));
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 0.1;
   }
 
-  /* Text content on top */
   .content {
     position: relative;
     z-index: 1;
@@ -100,16 +101,15 @@
 <body>
 
 <div class="background-steaks" aria-hidden="true">
-  <!-- Multiple steak emojis with random position, size, rotation -->
-  <span style="--size: 30px; --rotate: 10deg; top: 10%; left: 15%;">🥩</span>
-  <span style="--size: 50px; --rotate: -15deg; top: 40%; left: 5%;">🥩</span>
-  <span style="--size: 40px; --rotate: 25deg; top: 60%; left: 25%;">🥩</span>
-  <span style="--size: 20px; --rotate: -40deg; top: 80%; left: 10%;">🥩</span>
-  <span style="--size: 35px; --rotate: 30deg; top: 30%; left: 70%;">🥩</span>
-  <span style="--size: 45px; --rotate: -20deg; top: 50%; left: 80%;">🥩</span>
-  <span style="--size: 25px; --rotate: 15deg; top: 70%; left: 65%;">🥩</span>
-  <span style="--size: 55px; --rotate: -10deg; top: 15%; left: 90%;">🥩</span>
-  <span style="--size: 30px; --rotate: 5deg; top: 85%; left: 75%;">🥩</span>
+  <span style="--size: 30px; top: 10%; left: 15%;">🥩</span>
+  <span style="--size: 50px; top: 40%; left: 5%;">🥩</span>
+  <span style="--size: 40px; top: 60%; left: 25%;">🥩</span>
+  <span style="--size: 20px; top: 80%; left: 10%;">🥩</span>
+  <span style="--size: 35px; top: 30%; left: 70%;">🥩</span>
+  <span style="--size: 45px; top: 50%; left: 80%;">🥩</span>
+  <span style="--size: 25px; top: 70%; left: 65%;">🥩</span>
+  <span style="--size: 55px; top: 15%; left: 90%;">🥩</span>
+  <span style="--size: 30px; top: 85%; left: 75%;">🥩</span>
 </div>
 
 <div class="content">
@@ -188,6 +188,59 @@
   <div class="version">Version 4.4.1 - Updated July 7, 2025</div>
 </div>
 
+<script>
+  const steaks = document.querySelectorAll('.background-steaks span');
+  
+  // Store initial positions as percentages for vertical position parallax
+  const steakData = [];
+  steaks.forEach((steak, i) => {
+    steakData[i] = {
+      baseTop: parseFloat(steak.style.top),  // percentage
+      left: steak.style.left,
+      size: parseInt(steak.style.getPropertyValue('--size')),
+      rotation: Math.random() * 360,
+      scale: 1,
+      scaleDirection: 1,
+      rotationSpeed: (Math.random() * 0.2) + 0.05, // degrees per frame
+      scaleSpeed: (Math.random() * 0.005) + 0.001, // scale change per frame
+      scaleMin: 0.85,
+      scaleMax: 1.15,
+    };
+  });
+
+  // Parallax effect for vertical position on scroll at half speed
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    steaks.forEach((steak, i) => {
+      const data = steakData[i];
+      const newTop = data.baseTop + scrollY * 0.05; // 0.05 = half speed approx for viewport percentage
+      steak.style.top = `${newTop}%`;
+    });
+  });
+
+  // Animate rotation and scaling continuously
+  function animate() {
+    steaks.forEach((steak, i) => {
+      const data = steakData[i];
+      
+      // Update rotation
+      data.rotation += data.rotationSpeed;
+      if (data.rotation > 360) data.rotation -= 360;
+      
+      // Update scale
+      data.scale += data.scaleSpeed * data.scaleDirection;
+      if (data.scale > data.scaleMax || data.scale < data.scaleMin) {
+        data.scaleDirection *= -1;
+      }
+
+      steak.style.transform = `rotate(${data.rotation}deg) scale(${data.scale.toFixed(3)})`;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
 </body>
 </html>
-
